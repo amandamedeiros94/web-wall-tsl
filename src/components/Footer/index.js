@@ -6,7 +6,7 @@ const Footer = inject('stores')(
   observer(
     class Footer extends Component {
       render() {
-        return <header className="footer">Footer</header>
+        return <footer className="footer">Footer</footer>
       }
     }
   )
