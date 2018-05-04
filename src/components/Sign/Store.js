@@ -1,5 +1,5 @@
-import { action, decorate, observable } from 'mobx'
 import axios from 'axios'
+import { action, decorate, observable } from 'mobx'
 import { Cookies } from 'react-cookie'
 import { STATUS } from '../../config'
 
@@ -13,6 +13,7 @@ class SignStore {
   user = {
     id: this.cookies.get('userId'),
     username: this.cookies.get('userName'),
+    email: this.cookies.get('userEmail'),
   }
 
   showCreateAccount() {
@@ -20,8 +21,9 @@ class SignStore {
   }
 
   loginUser() {
-    this.cookies.set('userName', this.user.username, { maxAge: 86400 })
     this.cookies.set('userId', this.user.id, { maxAge: 86400 })
+    this.cookies.set('userName', this.user.username, { maxAge: 86400 })
+    this.cookies.set('userEmail', this.user.email, { maxAge: 86400 })
   }
 
   signIn() {
@@ -33,6 +35,7 @@ class SignStore {
       })
       .then((res) => {
         if (res.data.token) {
+          this.status = STATUS.LOADING
           axios
             .get(
               `${process.env.REACT_APP_API_URL}/users/validate-auth-token/`,
@@ -43,6 +46,7 @@ class SignStore {
             .then((res) => {
               this.user = res.data
               this.loginUser()
+              this.status = STATUS.READY
             })
             .catch((error) => {
               this.message = 'Invalid username or password'
@@ -54,14 +58,14 @@ class SignStore {
         this.message = 'Invalid username or password'
         this.status = STATUS.ERROR
       })
-    this.status = STATUS.READY
   }
 
   signOut() {
     this.status = STATUS.LOADING
     this.user = ''
-    this.cookies.remove('userName')
     this.cookies.remove('userId')
+    this.cookies.remove('userName')
+    this.cookies.remove('userEmail')
     this.status = STATUS.READY
   }
 
@@ -100,9 +104,13 @@ class SignStore {
         this.status = STATUS.READY
       })
       .catch((error) => {
-        this.message = 'Username invalid or already exists.'
+        this.message = 'Username invalid or already exists'
         this.status = STATUS.ERROR
       })
+  }
+
+  resetStatus() {
+    this.message = ''
   }
 }
 
@@ -123,6 +131,7 @@ decorate(SignStore, {
   updateNewUserValue: action,
   updateNewEmailValue: action,
   updateNewPasswordValue: action,
+  resetStatus: action,
 })
 
 export default SignStore

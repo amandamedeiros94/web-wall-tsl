@@ -1,0 +1,45 @@
+.input-post {
+  padding: 45px 0;
+}
+
+.input-post__button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.input-post__button {
+  background-color: #28a2d1;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 15px;
+  opacity: 1;
+  padding: 5px 15px;
+  text-transform: uppercase;
+  transition: opacity 0.2 ease;
+}
+
+.input-post__button:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.input-post__container {
+  display: flex;
+}
+
+.input-post__field {
+  background-color: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  border: solid 1px #d8d8d8;
+  padding: 10px;
+  width: 100%;
+}
+
+.posts__item-image-container {
+  height: 80px;
+  margin-right: 15px;
+  width: 80px;
+}

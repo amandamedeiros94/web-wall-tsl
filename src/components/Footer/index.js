@@ -6,7 +6,11 @@ const Footer = inject('stores')(
   observer(
     class Footer extends Component {
       render() {
-        return <footer className="footer">Footer</footer>
+        return (
+          <footer className="footer">
+            <div className="container">© 2018 by Amanda Medeiros</div>
+          </footer>
+        )
       }
     }
   )

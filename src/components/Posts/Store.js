@@ -22,6 +22,8 @@ export default class PostsStore {
   }
 
   postMessage(user) {
+    this.status = STATUS.LOADING
+
     axios
       .post(`${process.env.REACT_APP_API_URL}/posts/`, {
         message: this.inputText,
@@ -30,6 +32,7 @@ export default class PostsStore {
       .then((res) => {
         this.fetchPosts()
         this.inputText = ''
+        this.status = STATUS.READY
       })
       .catch((error) => {
         this.status = STATUS.ERROR
