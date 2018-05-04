@@ -6,18 +6,13 @@ const InputPost = inject('stores')(
   observer(
     class InputPost extends Component {
       postsStore = this.props.stores.postsStore
+      signStore = this.props.stores.signStore
 
-      constructor(props) {
-        super(props)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.updateInputValue = this.updateInputValue.bind(this)
+      handleSubmit = () => {
+        this.postsStore.postMessage(this.signStore.user)
       }
 
-      handleSubmit() {
-        this.postsStore.postMessage()
-      }
-
-      updateInputValue(event) {
+      updateInputValue = (event) => {
         this.postsStore.storeInputText(event.target.value)
       }
 

@@ -7,6 +7,7 @@ const Posts = inject('stores')(
   observer(
     class Posts extends Component {
       postsStore = this.props.stores.postsStore
+      signStore = this.props.stores.signStore
 
       componentDidMount() {
         this.postsStore.fetchPosts()
@@ -22,11 +23,14 @@ const Posts = inject('stores')(
             {this.postsStore.status === STATUS.READY &&
               this.postsStore.posts && (
                 <ul className="posts__list">
-                  {this.postsStore.posts.map((post) => (
-                    <li className="posts__item" key={post.id}>
-                      {post.message}
-                    </li>
-                  ))}
+                  {this.postsStore.posts.map((post) => {
+                    return (
+                      <li className="posts__item" key={post.id}>
+                        {post.user && <span>{post.user}: </span>}
+                        <span>{post.message}</span>
+                      </li>
+                    )
+                  })}
                 </ul>
               )}
           </main>

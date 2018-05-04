@@ -21,10 +21,11 @@ export default class PostsStore {
       })
   }
 
-  postMessage() {
+  postMessage(user) {
     axios
       .post(`${process.env.REACT_APP_API_URL}/posts/`, {
         message: this.inputText,
+        user: user.id,
       })
       .then((res) => {
         this.fetchPosts()
